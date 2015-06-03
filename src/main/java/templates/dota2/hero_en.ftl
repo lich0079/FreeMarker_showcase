@@ -152,124 +152,28 @@
                     <div class="contentblock">
                         <br>
                         <ul>
-                            <li sel="1" class="abi cur">
-                                <img  src="../img/earthshaker_fissure_hp2.png" />
+                            <#list abilitiesList as abi>
+                            <li sel="${abi_index + 1}" class="abi <#if abi_index == 0>cur</#if>">
+                                <img  src="../img/${abi.ability_img}" />
                             </li>
-                            <li sel="2" class="abi">
-                                <img  src="../img/earthshaker_enchant_totem_hp2.png" />               
-                            </li>
-                            <li sel="3" class="abi">
-                                <img  src="../img/earthshaker_aftershock_hp2.png" />                          
-                            </li>
-                            <li sel="4" class="abi">
-                                <img  src="../img/earthshaker_echo_slam_hp2.png" >
-                            </li>
+                            </#list>
                         </ul>
                     </div>
                     <div class="contentblock">
-                        <div id="abi1" class="abicontent cont">
-                            <p><strong>Fissure</strong></p>
-                            <p>Slams the ground with a mighty totem, fissuring the earth while stunning and damaging enemy units in a line. Creates an impassable ridge of stone.</p>
+                        <#list abilitiesList as abi>
+                        <div id="abi${abi_index + 1}" class="abicontent cont<#if abi_index != 0> hided</#if>">
+                            <p><strong>${abi.ability_name}</strong></p>
+                            <p>${abi.ability_desc}</p>
                             <br>
                             <table class="stattable" border="0"  cellspacing="0" cellpadding="4">
-                                <tr class="statRow">
-                                    <td width="45%">MANA COST:</td><td class="statRowColW" width="55%">125 / 140 / 155 / 170</td>
+                                <#list abi.stats as stat>
+                                <tr class="statRow<#if (stat_index/2 == 1)>B</#if>">
+                                    <td <#if stat_index == 0>width="45%"</#if>>${stat.stat_name}</td><td class="statRowColW"<#if stat_index == 0> width="55%"</#if>>${stat.stat_value}</td>
                                 </tr>
-                                <tr class="statRowB">
-                                    <td >COOLDOWN:</td><td class="statRowColW">15.0</td>
-                                </tr>
-                                <tr class="statRow">
-                                    <td >ABILITY:</td><td class="statRowColW">TARGET UNIT, TARGET POINT</td>
-                                </tr>
-                                <tr class="statRowB">
-                                    <td >AFFECTS:</td><td class="statRowColW">ENEMY HEROES</td>
-                                </tr>
-                                <tr class="statRow">
-                                    <td >DAMAGE:</td><td class="statRowColW">MAGICAL</td>
-                                </tr>
-                                <tr class="statRowB">
-                                    <td >DAMAGE:</td><td class="statRowColW">125 / 175 / 225 / 275</td>
-                                </tr>
-                                <tr class="statRow">
-                                    <td >FISSURE DURATION:</td><td class="statRowColW">8</td>
-                                </tr>
-                                <tr class="statRowB">
-                                    <td >STUN DURATION:</td><td class="statRowColW">1 / 1.25 / 1.5 / 1.75</td>
-                                </tr>
+                                </#list>
                             </table>
                         </div>
-                        <div id="abi2" class="abicontent cont hided">
-                            <p><strong>Enchant Totem</strong></p>
-                            <p>Empowers Earthshaker's totem, causing it to deal extra damage on the next attack.</p>
-                            <br>
-                            <table class="stattable"  border="0"  cellspacing="0" cellpadding="4">
-                                <tr class="statRow">
-                                    <td width="45%">MANA COST:</td><td class="statRowColW" width="55%">50 / 50 / 50 / 50</td>
-                                </tr>
-                                <tr class="statRowB">
-                                    <td >COOLDOWN:</td><td class="statRowColW">5</td>
-                                </tr>
-                                <tr class="statRow">
-                                    <td >ABILITY:</td><td class="statRowColW">NO TARGET</td>
-                                </tr>
-                                <tr class="statRowB">
-                                    <td >BONUS:</td><td class="statRowColW">75% / 150% / 225% / 300%</td>
-                                </tr>
-                                <tr class="statRow">
-                                    <td >DURATION:</td><td class="statRowColW">14 / 14 / 14 / 14</td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div id="abi3" class="abicontent cont hided">
-                            <p><strong>Aftershock</strong></p>
-                            <p>Causes the earth to shake underfoot, adding additional damage and stuns to nearby enemy units when Earthshaker casts his abilities.</p>
-                            <br>
-                            <table class="stattable"  border="0"  cellspacing="0" cellpadding="4">
-                                <tr class="statRow">
-                                    <td width="45%">ABILITY:</td><td class="statRowColW" width="55%">PASSIVE</td>
-                                </tr>
-                                <tr class="statRowB">
-                                    <td >DAMAGE:</td><td class="statRowColW">MAGICAL</td>
-                                </tr>
-                                <tr class="statRow">
-                                    <td >DAMAGE:</td><td class="statRowColW">50/75/100/125</td>
-                                </tr>
-                                <tr class="statRowB">
-                                    <td >RADIUS:</td><td class="statRowColW">300</td>
-                                </tr>
-                                <tr class="statRow">
-                                    <td >DURATION:</td><td class="statRowColW">0.6/0.9/1.2/1.5</td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div id="abi4" class="abicontent cont hided">
-                            <p><strong>Echo Slam</strong></p>
-                            <p>Shockwaves travel through the ground, damaging enemy units. Each enemy hit causes an echo to damage nearby units. Upgradable by Aghanim's Scepter.</p>
-                            <br>
-                            <table class="stattable"  border="0"  cellspacing="0" cellpadding="4">
-                                <tr class="statRow">
-                                    <td width="45%">MANA COST:</td><td class="statRowColW" width="55%">145 / 205 / 265</td>
-                                </tr>
-                                <tr class="statRowB">
-                                    <td >COOLDOWN:</td><td class="statRowColW">150.0 / 130.0 / 110.0</td>
-                                </tr>
-                                <tr class="statRow">
-                                    <td >ABILITY:</td><td class="statRowColW">NO TARGET</td>
-                                </tr>
-                                <tr class="statRowB">
-                                    <td >DAMAGE:</td><td class="statRowColW">MAGICAL</td>
-                                </tr>
-                                <tr class="statRow">
-                                    <td >DAMAGE:</td><td class="statRowColW">200 / 265 / 340</td>
-                                </tr>
-                                <tr class="statRowB">
-                                    <td >RADIUS:</td><td class="statRowColW">500</td>
-                                </tr>
-                                <tr class="statRow">
-                                    <td >ECHO DAMAGE:</td><td class="statRowColW">40 / 55 / 70</td>
-                                </tr>
-                            </table>
-                        </div>
+                        </#list>
                     </div>
                     <div class="clearfix"></div>
                     <br>

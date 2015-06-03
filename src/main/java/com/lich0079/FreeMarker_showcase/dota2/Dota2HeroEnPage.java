@@ -91,13 +91,13 @@ public class Dota2HeroEnPage implements IRootGenerator {
 		Elements  abilities = mainDoc.select("#abilitiesInner .abilitiesInsetBoxInner");
 		List abilitiesList = new ArrayList();
 		for (Element ability : abilities) {
-			Map m = new HashMap();
+			Map abi = new HashMap();
 			String ability_img = getAbilityImg(ability.select(".overviewAbilityImg").attr("src"));
-			m.put("ability_img", ability_img);
+			abi.put("ability_img", ability_img);
 			String ability_name = ability.select(".abilityHeaderRowDescription h2").text();
-			m.put("ability_name", ability_name);
+			abi.put("ability_name", ability_name);
 			String ability_desc = ability.select(".abilityHeaderRowDescription p").text();
-			m.put("ability_desc", ability_desc);
+			abi.put("ability_desc", ability_desc);
 			
 			List stats  = new ArrayList();
 			
@@ -124,8 +124,8 @@ public class Dota2HeroEnPage implements IRootGenerator {
 				stats.add(warpMap("stat_name",stat_names[i]+":","stat_value",attribVals.get(i).text()));
 			}
 			
-			m.put("stats", stats);
-			abilitiesList.add(m);
+			abi.put("stats", stats);
+			abilitiesList.add(abi);
 		}
 		result.put("abilitiesList", abilitiesList);
 		
