@@ -119,9 +119,9 @@ public class Dota2HeroEnPage implements IRootGenerator {
 			for (Element val : attribVals) {
 				abilityFooterBox = abilityFooterBox.replace(val.text(), "");
 			}
-			String[] stat_names = abilityFooterBox.split(":  ");
+			String[] stat_names = abilityFooterBox.split(": ");
 			for (int i = 0; i < stat_names.length; i++) {
-				stats.add(warpMap("stat_name",stat_names[i]+":","stat_value",attribVals.get(i).text()));
+				stats.add(warpMap("stat_name",stat_names[i].trim()+":","stat_value",attribVals.get(i).text()));
 			}
 			
 			abi.put("stats", stats);

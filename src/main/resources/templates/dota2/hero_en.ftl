@@ -167,8 +167,8 @@
                             <br>
                             <table class="stattable" border="0"  cellspacing="0" cellpadding="4">
                                 <#list abi.stats as stat>
-                                <tr class="statRow<#if (stat_index/2 == 1)>B</#if>">
-                                    <td <#if stat_index == 0>width="45%"</#if>>${stat.stat_name}</td><td class="statRowColW"<#if stat_index == 0> width="55%"</#if>>${stat.stat_value}</td>
+                                <tr class="statRow<#if (stat_index%2 == 1)>B</#if>">
+                                    <td<#if stat_index == 0> width="45%"</#if>>${stat.stat_name}</td><td class="statRowColW"<#if stat_index == 0> width="55%"</#if>>${stat.stat_value}</td>
                                 </tr>
                                 </#list>
                             </table>
