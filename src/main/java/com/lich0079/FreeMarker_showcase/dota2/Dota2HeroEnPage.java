@@ -24,6 +24,7 @@ public class Dota2HeroEnPage implements IRootGenerator {
 	public Map getRoot(Map parameter) throws Throwable {
 		Map result = new HashMap();
 		String href = (String) parameter.get("href");
+		String locale = (String) parameter.get("locale");
 		Document mainDoc = Jsoup.parse(HttpUtil.getHtmlString(href));
 		
 		
@@ -60,9 +61,25 @@ public class Dota2HeroEnPage implements IRootGenerator {
 		
 		String overview_DefenseVal = mainDoc.select("#overview_DefenseVal").text();
 		result.put("overview_DefenseVal", overview_DefenseVal);
-		
+
+		Elements  blocks = mainDoc.select("#centerColContent h3");
+
+		result.put("PORTRAIT", locale.equals("zh")?"图片":"PORTRAIT");
+		result.put("bio", blocks.get(1).text());
+		result.put("stats", blocks.get(2).text());
+		result.put("ABILITIES", blocks.get(3).text());
+
+		result.put("LEVEL", locale.equals("zh")?"等级":"LEVEL");
+		result.put("HIT_POINTS", locale.equals("zh")?"生命值":"HIT POINTS");
+		result.put("MANA", locale.equals("zh")?"魔法值":"MANA");
+		result.put("DAMAGE", locale.equals("zh")?"攻击力":"DAMAGE");
+		result.put("ARMOR", locale.equals("zh")?"护甲":"ARMOR");
+		result.put("SIGHT_RANGE", locale.equals("zh")?"视野范围":"SIGHT RANGE");
+		result.put("ATTACK_RANGE", locale.equals("zh")?"攻击距离":"ATTACK RANGE");
+		result.put("MISSILE_SPEED", locale.equals("zh")?"弹道速度":"MISSILE SPEED");
+
 		Elements  statsL = mainDoc.select("#statsLeft .statRowColW");
-		
+
 		result.put("hp1", statsL.get(2).text());
 		result.put("hp2", statsL.get(1).text());
 		result.put("hp3", statsL.get(0).text());
@@ -98,6 +115,8 @@ public class Dota2HeroEnPage implements IRootGenerator {
 			abi.put("ability_name", ability_name);
 			String ability_desc = ability.select(".abilityHeaderRowDescription p").text();
 			abi.put("ability_desc", ability_desc);
+			String abilityLore = ability.select(".abilityLore").text();
+			abi.put("abilityLore", abilityLore);
 			
 			List stats  = new ArrayList();
 			
@@ -119,6 +138,9 @@ public class Dota2HeroEnPage implements IRootGenerator {
 			for (Element val : attribVals) {
 				abilityFooterBox = abilityFooterBox.replace(val.text(), "");
 			}
+
+			abilityFooterBox = abilityFooterBox.replace("：",":");//fix chinese sympol issue
+
 			String[] stat_names = abilityFooterBox.split(": ");
 			for (int i = 0; i < stat_names.length; i++) {
 				stats.add(warpMap("stat_name",stat_names[i].trim()+":","stat_value",attribVals.get(i).text()));
@@ -178,7 +200,8 @@ public class Dota2HeroEnPage implements IRootGenerator {
 		
 		String path = FileUtil.class .getResource("/").getPath()+"test"+".html";
 		Map parameter = new HashMap();
-		parameter.put("href", "http://www.dota2.com/hero/Earthshaker/");
+		parameter.put("href", "http://www.dota2.com/hero/Earthshaker/?l=schinese");
+		parameter.put("locale","zh");
 		generator.generateResult(parameter, path);
 	}
 }

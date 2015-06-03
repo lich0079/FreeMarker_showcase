@@ -44,12 +44,12 @@
                      <div class="atype">${attackType}</div>
                     <table class="roletable" border="0"  cellspacing="0" cellpadding="4">
                             <tr >
-                                <td class="role" width="50%"><#if (roles?size > 0)> ${roles[0]}</#if></td>
-                                <td class="role" width="50%"><#if (roles?size > 1)> ${roles[1]}</#if></td>
+                                <td class="role" width="50%"><#if (roles?size > 0)>${roles[0]}</#if></td>
+                                <td class="role" width="50%"><#if (roles?size > 1)>${roles[1]}</#if></td>
                             </tr>
                             <tr >
-                                <td class="role"><#if (roles?size > 2)> ${roles[2]}</#if></td>
-                                <td class="role"><#if (roles?size > 3)> ${roles[3]}</#if></td>
+                                <td class="role"><#if (roles?size > 2)>${roles[2]}</#if></td>
+                                <td class="role"><#if (roles?size > 3)>${roles[3]}</#if></td>
                             </tr>
                         </table>
                 </div>
@@ -58,10 +58,10 @@
             
             <div class="tb_ floatleft">
                 <ul> 
-                    <li sel="1" class="tab sel">STATS</li>
-                    <li sel="2" class="tab unsel">ABILITIES</li>
-                    <li sel="3" class="tab unsel">BIO</li>
-                    <li sel="4" class="tab unsel">PORTRAIT</li>
+                    <li sel="1" class="tab sel">${stats}</li>
+                    <li sel="2" class="tab unsel">${ABILITIES}</li>
+                    <li sel="3" class="tab unsel">${bio}</li>
+                    <li sel="4" class="tab unsel">${PORTRAIT}</li>
                 </ul>
             </div>
             
@@ -92,52 +92,52 @@
                         <table class="stattable" width="98%" border="0"  cellspacing="0" cellpadding="4">
                             <tr class="statRow">
                                 <td width="2%"></td>
-                                <td width="30%">LEVEL</td>
+                                <td width="30%">${LEVEL}</td>
                                 <td width="20%">1</td>
                                 <td width="20%">15</td>
                                 <td width="18%">25</td>
                             </tr>
                             <tr class="statRowB">
                                 <td ></td>
-                                <td >HIT POINTS</td>
+                                <td >${HIT_POINTS}</td>
                                 <td class="statRowColW">${hp1}</td>
                                 <td class="statRowColW">${hp2}</td>
                                 <td class="statRowColW">${hp3}</td>
                             </tr>
                             <tr class="statRow">
                                 <td ></td>
-                                <td >MANA</td>
+                                <td >${MANA}</td>
                                 <td class="statRowColW">${mp1}</td>
                                 <td class="statRowColW">${mp2}</td>
                                 <td class="statRowColW">${mp3}</td>
                             </tr>
                             <tr class="statRowB">
                                 <td ></td>
-                                <td >DAMAGE</td>
+                                <td >${DAMAGE}</td>
                                 <td class="statRowColW">${at1}</td>
                                 <td class="statRowColW">${at2}</td>
                                 <td class="statRowColW">${at3}</td>
                             </tr>
                             <tr class="statRow">
                                 <td ></td>
-                                <td >ARMOR</td>
+                                <td >${ARMOR}</td>
                                 <td class="statRowColW">${ac1}</td>
                                 <td class="statRowColW">${ac2}</td>
                                 <td class="statRowColW">${ac3}</td>
                             </tr>
                             <tr class="statRowB">
                                 <td ></td>
-                                <td >SIGHT RANGE</td>
+                                <td >${SIGHT_RANGE}</td>
                                 <td class="statRowColW" colspan="3" align="center">${s_range}</td>
                             </tr>
                             <tr class="statRow">
                                 <td ></td>
-                                <td >ATTACK RANGE</td>
+                                <td >${ATTACK_RANGE}</td>
                                 <td class="statRowColW" colspan="3" align="center">${a_range}</td>
                             </tr>
                             <tr class="statRowB">
                                 <td ></td>
-                                <td >MISSILE SPEED</td>
+                                <td >${MISSILE_SPEED}</td>
                                 <td class="statRowColW" colspan="3" align="center">${m_speed}</td>
                             </tr>
                         </table>
@@ -153,7 +153,7 @@
                         <br>
                         <ul>
                             <#list abilitiesList as abi>
-                            <li sel="${abi_index + 1}" class="abi <#if abi_index == 0>cur</#if>">
+                            <li sel="${abi_index + 1}" class="abi<#if abi_index == 0> cur</#if>">
                                 <img  src="../img/${abi.ability_img}" />
                             </li>
                             </#list>
@@ -172,6 +172,8 @@
                                 </tr>
                                 </#list>
                             </table>
+                            <br>
+                            <p>${abi.abilityLore}</p>
                         </div>
                         </#list>
                     </div>
