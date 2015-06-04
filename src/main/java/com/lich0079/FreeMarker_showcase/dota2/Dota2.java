@@ -23,7 +23,7 @@ public class Dota2 {
 			try {
 				final String herocode = element.attr("id").replace("link_", "");
 				final String href = element.attr("href");
-				Generator generator = new Generator("/dota2/hero_en.ftl", new Dota2HeroEnPage());
+				Generator generator = new Generator("/dota2/hero.ftl", new Dota2HeroPage());
 				
 				path = FileUtil.class .getResource("/").getPath()+herocode+".html";
 				Map parameter = new HashMap();

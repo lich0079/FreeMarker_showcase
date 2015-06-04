@@ -26,29 +26,6 @@ import freemarker.template.Template;
  */
 public class App {
 	public static void main(String[] args) throws Throwable {
-		Configuration cfg = new Configuration();
-		cfg.setClassForTemplateLoading(App.class, "/templates");
-		cfg.setObjectWrapper(new DefaultObjectWrapper());
-		cfg.setDefaultEncoding("UTF-8");
-		
-		Template temp = cfg.getTemplate("/dota2/hero_en.ftl");
-		
-		Document mainDoc = Jsoup.parse(HttpUtil.getHtmlString("http://www.dota2.com/heroes/?l=english"));
-		Elements heros = mainDoc.select(".heroIcons  a"); 
-		for (Element element : heros) {
-			final String heroname = element.attr("id").replace("link_", "");
-			Generator generator = new Generator("/dota2/hero_en.ftl", new IRootGenerator() {
-				
-				public Map getRoot(Map parameter) {
-					Map root = new HashMap();
-					root.put("heroname", heroname);
-					return root;
-				}
-			});
-			
-			String path = FileUtil.class .getResource("/").getPath()+heroname+".html";
-			generator.generateResult(null, path, true);
-		}
-		
+		System.out.println("hello");
 	}
 }

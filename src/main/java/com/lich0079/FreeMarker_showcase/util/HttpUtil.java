@@ -1,6 +1,14 @@
 package com.lich0079.FreeMarker_showcase.util;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.net.URL;
 
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
@@ -27,5 +35,23 @@ public class HttpUtil {
         HttpGet request = new HttpGet(url);
 		HttpResponse res = httpclient.execute( request);
 		return EntityUtils.toString(res.getEntity(),"UTF-8");
+	}
+	
+	public static void downloadImg(String src, String name){
+		try {
+			URL url = new URL(src);
+			Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(HttpUtil.proxyUrl, HttpUtil.proxyPort));
+			InputStream in = new BufferedInputStream(url.openConnection(proxy).getInputStream());
+			OutputStream out = new BufferedOutputStream(new FileOutputStream(name));
+
+			for ( int i; (i = in.read()) != -1; ) {
+			    out.write(i);
+			}
+			in.close();
+			out.close();
+		} catch (Throwable e) {
+			e.printStackTrace();
+			System.out.println("error when fetch "+src);
+		}
 	}
 }

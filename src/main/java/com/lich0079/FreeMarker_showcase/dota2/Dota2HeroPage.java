@@ -25,7 +25,7 @@ import com.lich0079.FreeMarker_showcase.util.Generator;
 import com.lich0079.FreeMarker_showcase.util.HttpUtil;
 
 @SuppressWarnings({"unchecked","rawtypes"})
-public class Dota2HeroEnPage implements IRootGenerator {
+public class Dota2HeroPage implements IRootGenerator {
 
 	public Map getRoot(Map parameter) throws Throwable {
 		Map result = new HashMap();
@@ -159,6 +159,9 @@ public class Dota2HeroEnPage implements IRootGenerator {
 		}
 		result.put("abilitiesList", abilitiesList);
 		
+//		String vertImg = mainDoc.select("#heroPrimaryPortraitImg").attr("src");
+//		downloadImg(vertImg);
+		
 //		System.out.println(result);
 		return result;
 	}
@@ -170,30 +173,21 @@ public class Dota2HeroEnPage implements IRootGenerator {
 		return m;
 	}
 	private String getAbilityImg(String src) {
-		int last = src.lastIndexOf("/");
-		int lastQ = src.lastIndexOf("?");
-		String name =  src.substring(last+1,lastQ);
-		downloadImg(src, name);
+		String name = getImgName(src);
+//		downloadImg(src);
 		return name;
 	}
 
-	private void downloadImg(String src, String name){
-		try {
-			URL url = new URL(src);
-			Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(HttpUtil.proxyUrl, HttpUtil.proxyPort));
-			InputStream in = new BufferedInputStream(url.openConnection(proxy).getInputStream());
-			OutputStream out = new BufferedOutputStream(new FileOutputStream(name));
+	private String getImgName(String src) {
+		int last = src.lastIndexOf("/");
+		int lastQ = src.lastIndexOf("?");
+		String name =  src.substring(last+1,lastQ);
+		return name;
+	}
 
-			for ( int i; (i = in.read()) != -1; ) {
-			    out.write(i);
-			}
-			in.close();
-			out.close();
-		} catch (Throwable e) {
-			e.printStackTrace();
-			System.out.println("error when fetch "+src);
-		}
-		
+	private void downloadImg(String src){
+        String name = getImgName(src);
+        HttpUtil.downloadImg(src, name);
 	}
 	
 	private String handlePrimary(String overviewIcon_Primary){
@@ -220,8 +214,7 @@ public class Dota2HeroEnPage implements IRootGenerator {
 	}
 
 	public static void main(String[] args) throws Throwable {
-		
-		Generator generator = new Generator("/dota2/hero_en.ftl", new Dota2HeroEnPage());
+		Generator generator = new Generator("/dota2/hero.ftl", new Dota2HeroPage());
 		
 		String path = FileUtil.class .getResource("/").getPath()+"test"+".html";
 		Map parameter = new HashMap();
