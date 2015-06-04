@@ -13,12 +13,16 @@ import org.apache.http.util.EntityUtils;
 
 public class HttpUtil {
 
+	public static final String proxyUrl = "161.92.51.225";
+	public static final int proxyPort = 8080;
+	
+	
 	public static String getHtmlString(String url) throws ClientProtocolException, IOException{
 		HttpClient httpclient = new DefaultHttpClient();
 		
 		//if you under a proxy
-//        HttpHost proxy = new HttpHost("161.92.51.225", 8080, "http");
-//        httpclient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
+        HttpHost proxy = new HttpHost(proxyUrl, proxyPort, "http");
+        httpclient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
         
         HttpGet request = new HttpGet(url);
 		HttpResponse res = httpclient.execute( request);

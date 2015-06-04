@@ -43,11 +43,16 @@ public class Generator {
 		return temp;
 	}
 	
-	public void generateResult(Map parameter, String resultPath) throws Throwable{
+	public void generateResult(Map parameter, String resultPath, boolean test) throws Throwable{
 		Template temp = getTemplate();
 		Map root = rootGenerator.getRoot(parameter);
-		Writer out = new OutputStreamWriter(System.out);
-//				new BufferedWriter(new OutputStreamWriter( new FileOutputStream(resultPath), "UTF-8"));
+		Writer out = null;
+		if(test){
+			out = new OutputStreamWriter(System.out);
+		}else{
+			out = new BufferedWriter(new OutputStreamWriter( new FileOutputStream(resultPath), "UTF-8"));
+		}
+		
     	temp.process(root, out);
     	out.flush();
     	System.out.println("write to "+resultPath);

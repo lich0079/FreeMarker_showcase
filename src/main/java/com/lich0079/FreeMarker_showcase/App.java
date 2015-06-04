@@ -47,7 +47,7 @@ public class App {
 			});
 			
 			String path = FileUtil.class .getResource("/").getPath()+heroname+".html";
-			generator.generateResult(null, path);
+			generator.generateResult(null, path, true);
 		}
 		
 	}

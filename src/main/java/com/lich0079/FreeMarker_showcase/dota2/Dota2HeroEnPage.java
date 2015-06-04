@@ -1,5 +1,13 @@
 package com.lich0079.FreeMarker_showcase.dota2;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,8 +24,6 @@ import com.lich0079.FreeMarker_showcase.util.FileUtil;
 import com.lich0079.FreeMarker_showcase.util.Generator;
 import com.lich0079.FreeMarker_showcase.util.HttpUtil;
 
-import freemarker.template.utility.StringUtil;
-
 @SuppressWarnings({"unchecked","rawtypes"})
 public class Dota2HeroEnPage implements IRootGenerator {
 
@@ -28,7 +34,9 @@ public class Dota2HeroEnPage implements IRootGenerator {
 		Document mainDoc = Jsoup.parse(HttpUtil.getHtmlString(href));
 		
 		
-		String herocode = mainDoc.select("#heroTopPortraitIMG").attr("src").replace("http://cdn.dota2.com/apps/dota2/images/heroes/", "").split("_")[0];
+		String herocode = mainDoc.select("#heroTopPortraitIMG").attr("src").replace("http://cdn.dota2.com/apps/dota2/images/heroes/", "");
+		int q = herocode.indexOf("_full");
+		herocode = herocode.substring(0, q);
 		result.put("herocode", herocode);
 		
 		String name = mainDoc.select("#centerColContent  h1").text();
@@ -65,9 +73,9 @@ public class Dota2HeroEnPage implements IRootGenerator {
 		Elements  blocks = mainDoc.select("#centerColContent h3");
 
 		result.put("PORTRAIT", locale.equals("zh")?"图片":"PORTRAIT");
-		result.put("bio", blocks.get(1).text());
-		result.put("stats", blocks.get(2).text());
-		result.put("ABILITIES", blocks.get(3).text());
+		result.put("bio", blocks.get(1).text().toUpperCase());
+		result.put("stats", blocks.get(2).text().toUpperCase());
+		result.put("ABILITIES", blocks.get(3).text().toUpperCase());
 
 		result.put("LEVEL", locale.equals("zh")?"等级":"LEVEL");
 		result.put("HIT_POINTS", locale.equals("zh")?"生命值":"HIT POINTS");
@@ -102,7 +110,7 @@ public class Dota2HeroEnPage implements IRootGenerator {
 		result.put("a_range", statsR.get(1).text());
 		result.put("m_speed", statsR.get(2).text());
 		
-		String bioInner = mainDoc.select("#bioInner").text();
+		String bioInner = mainDoc.select("#bioInner").html();
 		result.put("bioInner", bioInner);
 		
 		Elements  abilities = mainDoc.select("#abilitiesInner .abilitiesInsetBoxInner");
@@ -136,7 +144,7 @@ public class Dota2HeroEnPage implements IRootGenerator {
 			
 			Elements attribVals = ability.select(".abilityFooterBox .attribVal");
 			for (Element val : attribVals) {
-				abilityFooterBox = abilityFooterBox.replace(val.text(), "");
+				abilityFooterBox = StringUtils.replaceOnce(abilityFooterBox, val.text(), "");
 			}
 
 			abilityFooterBox = abilityFooterBox.replace("：",":");//fix chinese sympol issue
@@ -151,10 +159,6 @@ public class Dota2HeroEnPage implements IRootGenerator {
 		}
 		result.put("abilitiesList", abilitiesList);
 		
-		
-		
-		
-		
 //		System.out.println(result);
 		return result;
 	}
@@ -168,9 +172,30 @@ public class Dota2HeroEnPage implements IRootGenerator {
 	private String getAbilityImg(String src) {
 		int last = src.lastIndexOf("/");
 		int lastQ = src.lastIndexOf("?");
-		return src.substring(last+1,lastQ);
+		String name =  src.substring(last+1,lastQ);
+		downloadImg(src, name);
+		return name;
 	}
 
+	private void downloadImg(String src, String name){
+		try {
+			URL url = new URL(src);
+			Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(HttpUtil.proxyUrl, HttpUtil.proxyPort));
+			InputStream in = new BufferedInputStream(url.openConnection(proxy).getInputStream());
+			OutputStream out = new BufferedOutputStream(new FileOutputStream(name));
+
+			for ( int i; (i = in.read()) != -1; ) {
+			    out.write(i);
+			}
+			in.close();
+			out.close();
+		} catch (Throwable e) {
+			e.printStackTrace();
+			System.out.println("error when fetch "+src);
+		}
+		
+	}
+	
 	private String handlePrimary(String overviewIcon_Primary){
 		String px = overviewIcon_Primary.replace("top:", "").replace("px", "");
 		if(px.equals("1")){
@@ -200,8 +225,8 @@ public class Dota2HeroEnPage implements IRootGenerator {
 		
 		String path = FileUtil.class .getResource("/").getPath()+"test"+".html";
 		Map parameter = new HashMap();
-		parameter.put("href", "http://www.dota2.com/hero/Earthshaker/?l=schinese");
-		parameter.put("locale","zh");
-		generator.generateResult(parameter, path);
+		parameter.put("href", "http://www.dota2.com/hero/Oracle/?l=english");
+		parameter.put("locale","en");
+		generator.generateResult(parameter, path, true);
 	}
 }

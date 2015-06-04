@@ -73,9 +73,9 @@
                     <div class="contentblock" >
                         <div class="statsline floatleft">
                             <ul>
-                                <li <#if overviewIcon_Primary == "Int">class="relativeP">&nbsp;<img class="primary" src="../img/overviewicon_primary.png" width="40" height="40"</#if>>&nbsp;<img src="../img/overviewicon_int.png" class="img33"> <span>${overview_IntVal}</span></li>
-                                <li <#if overviewIcon_Primary == "Agi">class="relativeP">&nbsp;<img class="primary" src="../img/overviewicon_primary.png" width="40" height="40"</#if>>&nbsp;<img src="../img/overviewicon_agi.png" class="img33"> <span>${overview_AgiVal}</span></li>
-                                <li <#if overviewIcon_Primary == "Str">class="relativeP">&nbsp;<img class="primary" src="../img/overviewicon_primary.png" width="40" height="40"</#if>><img src="../img/overviewicon_str.png" class="img33"> <span>${overview_StrVal}</span></li>
+                                <li <#if overviewIcon_Primary == "Int">class="relativeP">&nbsp;<img class="primary" src="../img/overviewicon_primary.png" width="40" height="40"><#else>>&nbsp;</#if><img src="../img/overviewicon_int.png" class="img33"> <span>${overview_IntVal}</span></li>
+                                <li <#if overviewIcon_Primary == "Agi">class="relativeP">&nbsp;<img class="primary" src="../img/overviewicon_primary.png" width="40" height="40"><#else>>&nbsp;</#if><img src="../img/overviewicon_agi.png" class="img33"> <span>${overview_AgiVal}</span></li>
+                                <li <#if overviewIcon_Primary == "Str">class="relativeP">&nbsp;<img class="primary" src="../img/overviewicon_primary.png" width="40" height="40"><#else>>&nbsp;</#if><img src="../img/overviewicon_str.png" class="img33"> <span>${overview_StrVal}</span></li>
                             </ul>
                         </div>
                         <div class="grow floatleft">
@@ -172,7 +172,6 @@
                                 </tr>
                                 </#list>
                             </table>
-                            <br>
                             <p>${abi.abilityLore}</p>
                         </div>
                         </#list>
