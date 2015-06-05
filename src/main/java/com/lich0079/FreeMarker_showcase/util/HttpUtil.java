@@ -29,7 +29,7 @@ public class HttpUtil {
 		HttpClient httpclient = new DefaultHttpClient();
 		
 		//if you under a proxy
-        HttpHost proxy = new HttpHost(proxyUrl, proxyPort, "http");
+        HttpHost proxy = new  HttpHost(proxyUrl, proxyPort, "http");
         httpclient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
         
         HttpGet request = new HttpGet(url);
