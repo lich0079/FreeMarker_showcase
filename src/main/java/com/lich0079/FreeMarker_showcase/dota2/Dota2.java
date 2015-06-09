@@ -27,8 +27,10 @@ public class Dota2 {
 				
 				path = FileUtil.class .getResource("/").getPath()+herocode+".html";
 				Map parameter = new HashMap();
-				parameter.put("href", href+"?l=schinese");
-				parameter.put("locale","zh");
+//				parameter.put("href", href+"?l=schinese");
+//				parameter.put("locale","zh");
+				parameter.put("href", href+"?l=english");
+				parameter.put("locale","en");
 				generator.generateResult(parameter, path, false);
 			} catch (Throwable e) {
 				System.out.println("error when generate"+path);

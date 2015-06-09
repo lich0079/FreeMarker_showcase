@@ -3,6 +3,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>${name}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" type="text/css" href="../hero.css">
             <script type="text/javascript" src="../jquery-1.6.4.min.js"></script>
             <script type="text/javascript">
@@ -34,15 +35,19 @@
                 </script>
             </head>
     <body>
-        <div class="everything"><div class="share"><a href="share.html"><img src="../openin.png"/></a></div>
-            <div>
-                <div class="floatleft">
+        <div class="everything">
+            <div class="share">
+                <a href="share.html"><img src="../openin.png"/></a>
+            </div>
+            <div class="head">
+                <div class="floatleft headleft">
                     <a href='javascript:history.go(-1)'  name='gotop'><img  src="../img/${herocode}_hphover.png"/></a>
                 </div>
-                <div  class="floatleft">
+                <div  class="floatleft headright">
                     <div class="heroName">${name}</div>
-                     <div class="atype">${attackType}</div>
-                    <table class="roletable" border="0"  cellspacing="0" cellpadding="4">
+                    <div class="atype">${attackType}</div>
+                    <div style="float:right">
+                        <table class="roletable" border="0"  cellspacing="0" cellpadding="4">
                             <tr >
                                 <td class="role" width="50%"><#if (roles?size > 0)>${roles[0]}</#if></td>
                                 <td class="role" width="50%"><#if (roles?size > 1)>${roles[1]}</#if></td>
@@ -52,11 +57,12 @@
                                 <td class="role"><#if (roles?size > 3)>${roles[3]}</#if></td>
                             </tr>
                         </table>
+                    </div>
                 </div>
             </div>
             <div class="clearfix"></div>
             
-            <div class="tb_ floatleft">
+            <div class="tb_ ">
                 <ul> 
                     <li sel="1" class="tab sel">${stats}</li>
                     <li sel="2" class="tab unsel">${ABILITIES}</li>
@@ -67,7 +73,7 @@
             
             <div class="clearfix"></div>
             
-            <div class="floatleft">
+            <div >
                 <div id="content1"  class="hideDIV">
 
                     <div class="contentblock" >
@@ -150,7 +156,6 @@
                 </div>
                 <div id="content2"  class="abilities hideDIV hided">
                     <div class="contentblock">
-                        <br>
                         <ul>
                             <#list abilitiesList as abi>
                             <li sel="${abi_index + 1}" class="abi<#if abi_index == 0> cur</#if>">

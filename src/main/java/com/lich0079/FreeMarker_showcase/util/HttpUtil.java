@@ -10,6 +10,7 @@ import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.net.URL;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -37,6 +38,12 @@ public class HttpUtil {
 		return EntityUtils.toString(res.getEntity(),"UTF-8");
 	}
 	
+	public static String getHtmlString2(String src) throws Throwable{
+		URL url = new URL(src);
+		Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(HttpUtil.proxyUrl, HttpUtil.proxyPort));
+		InputStream in = new BufferedInputStream(url.openConnection(proxy).getInputStream());
+		return IOUtils.toString(in, "UTF-8");
+	}
 	public static void downloadImg(String src, String name){
 		try {
 			URL url = new URL(src);
@@ -53,5 +60,9 @@ public class HttpUtil {
 			e.printStackTrace();
 			System.out.println("error when fetch "+src);
 		}
+	}
+	
+	public static void main(String[] args) throws Throwable {
+		System.out.println(getHtmlString2("http://www.heroesnexus.com/heroes/2-abathur"));
 	}
 }
